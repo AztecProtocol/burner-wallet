@@ -17,7 +17,6 @@ import SendWithLink from './components/SendWithLink';
 import Receive from './components/Receive'
 import Share from './components/Share'
 import ShareLink from './components/ShareLink'
-import Balance from "./components/Balance";
 import Badges from "./components/Badges";
 import Ruler from "./components/Ruler";
 import Receipt from "./components/Receipt";
@@ -43,12 +42,17 @@ import namehash from 'eth-ens-namehash'
 //https://github.com/lesnitsky/react-native-webview-messaging/blob/v1/examples/react-native/web/index.js
 import RNMessageChannel from 'react-native-webview-messaging';
 
+import Row from './components/layout/Row/Row';
+import Block from './components/layout/Block/Block';
+import MainCardWrapper from './components/MainCardWrapper';
+import BalanceRow from './components/BalanceRow/BalanceRow';
 
 import bufficorn from './bufficorn.png';
 import cypherpunk from './cypherpunk.png';
 import eth from './ethereum.png';
 import dai from './dai.jpg';
 import xdai from './xdai.jpg';
+import aztecIcon from './aztec.png';
 
 let base64url = require('base64url')
 const EthCrypto = require('eth-crypto');
@@ -485,6 +489,7 @@ class App extends Component {
 
 
     if(this.state.account){
+      let zkdaiBalance = 0.00
       let ethBalance = 0.00
       let daiBalance = 0.00
       let xdaiBalance = 0.00
@@ -511,7 +516,7 @@ class App extends Component {
         xdaiBalance = this.state.xdaiweb3.utils.fromWei(""+xdaiBalance,'ether')
       }
 
-      this.setState({ethBalance,daiBalance,xdaiBalance,badgeBalance,hasUpdateOnce:true})
+      this.setState({zkdaiBalance,ethBalance,daiBalance,xdaiBalance,badgeBalance,hasUpdateOnce:true})
     }
 
 
@@ -1223,6 +1228,23 @@ render() {
             }
           }
 
+          let selected = "zkDai"
+          let extraTokens = ""
+
+          let defaultBalanceDisplay = (
+            <div>
+              <BalanceRow
+                icon={aztecIcon}
+                selected="zkDai"
+                text="zkDai"
+                amount={this.state.zkdaiBalance}
+                address={account}
+                dollarDisplay={dollarDisplay}
+              />
+              <Ruler/>
+            </div>
+          )
+
 
           if(view.indexOf("account_")==0)
           {
@@ -1266,21 +1288,18 @@ render() {
             )
           }
 
-          let selected = "xDai"
-          let extraTokens = ""
-
-          let defaultBalanceDisplay = (
-            <div>
-              <Balance icon={xdai} selected={false} text={"xdai"} amount={this.state.xdaiBalance} address={account} dollarDisplay={dollarDisplay} />
-              <Ruler/>
-            </div>
-          )
-
           if(ERC20TOKEN){
             selected = ERC20NAME
             extraTokens = (
               <div>
-                <Balance icon={ERC20IMAGE} selected={selected} text={ERC20NAME} amount={this.state.balance} address={account} dollarDisplay={dollarDisplay} />
+                <BalanceRow
+                  icon={ERC20IMAGE}
+                  selected={selected}
+                  text={ERC20NAME}
+                  amount={this.state.balance}
+                  address={account}
+                  dollarDisplay={dollarDisplay}
+                />
                 <Ruler/>
               </div>
             )
@@ -1305,30 +1324,34 @@ render() {
             case 'main':
             return (
               <div>
-                <div className="main-card card w-100" style={{zIndex:1}}>
-
-
+                <MainCardWrapper>
                   {extraTokens}
-
-                  <Balance icon={xdai} selected={selected} text={"xDai"} amount={this.state.xdaiBalance} address={account} dollarDisplay={dollarDisplay}/>
-                  <Ruler/>
-                  <Balance icon={dai} selected={selected} text={"DAI"} amount={this.state.daiBalance} address={account} dollarDisplay={dollarDisplay}/>
-                  <Ruler/>
-                  <Balance icon={eth} selected={selected} text={"ETH"} amount={parseFloat(this.state.ethBalance) * parseFloat(this.state.ethprice)} address={account} dollarDisplay={dollarDisplay}/>
+                  <BalanceRow
+                    icon={aztecIcon}
+                    selected={selected}
+                    text="zkDai"
+                    amount={this.state.zkdaiBalance}
+                    address={account}
+                    dollarDisplay={dollarDisplay}
+                  />
+                  <BalanceRow icon={xdai} selected={selected} text={"xDai"} amount={this.state.xdaiBalance} address={account} dollarDisplay={dollarDisplay}/>
+                  <BalanceRow icon={dai} selected={selected} text={"DAI"} amount={this.state.daiBalance} address={account} dollarDisplay={dollarDisplay}/>
+                  <BalanceRow icon={eth} selected={selected} text={"ETH"} amount={parseFloat(this.state.ethBalance) * parseFloat(this.state.ethprice)} address={account} dollarDisplay={dollarDisplay}/>
                   <Ruler/>
                   {badgeDisplay}
-
-                  <MainCard
-                    subBalanceDisplay={subBalanceDisplay}
-                    buttonStyle={buttonStyle}
-                    address={account}
-                    balance={balance}
-                    changeAlert={this.changeAlert}
-                    changeView={this.changeView}
-                    dollarDisplay={dollarDisplay}
-                    ERC20TOKEN={ERC20TOKEN}
-                  />
-                  {moreButtons}
+                  <Row margin="m">
+                    <MainCard
+                      subBalanceDisplay={subBalanceDisplay}
+                      buttonStyle={buttonStyle}
+                      address={account}
+                      balance={balance}
+                      changeAlert={this.changeAlert}
+                      changeView={this.changeView}
+                      dollarDisplay={dollarDisplay}
+                      ERC20TOKEN={ERC20TOKEN}
+                    />
+                    {moreButtons}
+                  </Row>
                   <RecentTransactions
                     view={this.state.view}
                     buttonStyle={buttonStyle}
@@ -1339,7 +1362,7 @@ render() {
                     block={this.state.block}
                     recentTxs={ERC20TOKEN?this.state.fullRecentTxs:this.state.recentTxs}
                   />
-                </div>
+                </MainCardWrapper>
                 <Bottom
                   icon={"wrench"}
                   text={i18n.t('advance_title')}

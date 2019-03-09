@@ -1,0 +1,13 @@
+@import '../config/colors';
+
+.balance-row {
+  opacity: 0.7;
+
+  & + .balance-row {
+    border-top: 1px solid $default-border-color;
+  }
+
+  &.selected {
+    opacity: 1;
+  }
+}

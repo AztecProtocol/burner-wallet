@@ -64,18 +64,6 @@ export  default ({openScanner, network, total, dollarDisplay, ens, title, titleI
     delete scanButtonStyle.bottom
   }
 
-  let bottomRight = (
-    <div style={scanButtonStyle} onClick={() => {
-      openScanner({view:"send_to_address"})
-    }} >
-      <div style={{position:'relative',backgroundImage:"linear-gradient("+mainStyle.mainColorAlt+","+mainStyle.mainColor+")",backgroundColor:mainStyle.mainColor,borderRadius:"50%",width:89,height:89,boxShadow: "0.5px 0.5px 5px #000000"}}>
-        <a href="#" style={{color:'#FFFFFF',position:'absolute',left:30,top:28}}>
-          <i className="fas fa-qrcode" />
-        </a>
-      </div>
-    </div>
-  )
-
   let opacity = 0.5
 
 
@@ -110,7 +98,6 @@ export  default ({openScanner, network, total, dollarDisplay, ens, title, titleI
     <div className="header" style={{opacity}}>
       {topLeft}
       {topRight}
-      {bottomRight}
     </div>
   )
 };
