@@ -37,7 +37,10 @@ const BalanceRow = ({
           <img
             src={icon}
             alt={text}
-            style={{maxWidth:50,maxHeight:50}}
+            style={{
+              width: '50px',
+              height: '50px',
+            }}
           />
           <Block padding="0 m">
             <Text

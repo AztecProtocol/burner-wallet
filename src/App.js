@@ -1736,13 +1736,13 @@ render() {
             case 'exchange':
             return (
               <div>
-                <div className="main-card card w-100" style={{zIndex:1}}>
-
+                <MainCardWrapper>
                   <NavCard title={i18n.t('exchange_title')} goBack={this.goBack.bind(this)}/>
                   <Exchange
                     eth={eth}
                     dai={dai}
                     xdai={xdai}
+                    zkdai={aztecIcon}
                     ERC20NAME={ERC20NAME}
                     ERC20IMAGE={ERC20IMAGE}
                     ERC20TOKEN={ERC20TOKEN}
@@ -1751,6 +1751,7 @@ render() {
                     ethBalance={this.state.ethBalance}
                     daiBalance={this.state.daiBalance}
                     xdaiBalance={this.state.xdaiBalance}
+                    zkdaiBalance={this.state.zkdaiBalance}
                     mainnetweb3={this.state.mainnetweb3}
                     xdaiweb3={this.state.xdaiweb3}
                     daiContract={this.state.daiContract}
@@ -1771,7 +1772,7 @@ render() {
                     goBack={this.goBack.bind(this)}
                     dollarDisplay={dollarDisplay}
                   />
-                </div>
+                </MainCardWrapper>
                 <Bottom
                   action={this.goBack.bind(this)}
                 />

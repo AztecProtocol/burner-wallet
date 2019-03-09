@@ -5,7 +5,6 @@ import {CopyToClipboard} from "react-copy-to-clipboard";
 import i18n from '../i18n';
 import Section from './Section/Section';
 import Row from './layout/Row/Row';
-import Block from './layout/Block/Block';
 import Button from './general/Button/Button';
 import ButtonCol from './ButtonCol';
 const QRCode = require('qrcode.react');

@@ -64,6 +64,15 @@ $button-border-width: 1px;
         $spinner-size: get-line-height($text-size-key);
         @include spinner-shape($spinner-size);
       }
+
+      &.button-expand-#{$suffix}-true {
+        $padding-h-small: $padding-h / 2;
+        padding: $padding-v $padding-h-small;
+
+        &.outlined {
+            padding: ($padding-v - $button-border-width * 2) $padding-h-small;
+        }
+      }
     }
   }
 
@@ -90,6 +99,7 @@ $button-border-width: 1px;
     -moz-appearance: none;
     outline: none;
     box-shadow: none;
+    white-space: nowrap;
 
     &:focus {
         outline: none;

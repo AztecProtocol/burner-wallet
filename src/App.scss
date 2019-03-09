@@ -146,3 +146,19 @@ i.fas {
     margin: 10px;
   }
 }
+
+:global(.lh0) {
+  line-height: 0 !important;
+}
+
+:global(.lh1) {
+  line-height: 1 !important;
+}
+
+:global(.flex-fixed) {
+  flex-shrink: 0;
+}
+
+:global(.flex-free-expand) {
+  flex: 1 1 auto;
+}

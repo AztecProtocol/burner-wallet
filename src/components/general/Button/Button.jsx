@@ -69,13 +69,21 @@ export const Button = ({
       }}
     >
       {alignIcon === 'left' && icon && (
-        <div className="icon-left">
+        <div
+          className={classnames({
+            'icon-left': children || text,
+          })}
+        >
           {icon}
         </div>
       )}
       {children || text}
       {alignIcon === 'right' && icon && (
-        <div className="icon-right">
+        <div
+          className={classnames({
+            'icon-right': children || text,
+          })}
+        >
           {icon}
         </div>
       )}
