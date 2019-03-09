@@ -43,6 +43,7 @@ import RNMessageChannel from 'react-native-webview-messaging';
 
 import Row from './components/layout/Row/Row';
 import Block from './components/layout/Block/Block';
+import Text from './components/general/Text/Text';
 import MainCardWrapper from './components/MainCardWrapper';
 import BalanceRow from './components/BalanceRow/BalanceRow';
 
@@ -1075,7 +1076,10 @@ render() {
 
   return (
     <I18nextProvider i18n={i18n}>
-    <div style={mainStyle}>
+    <div
+      className="app-wrapper"
+      style={mainStyle}
+    >
       <div style={innerStyle}>
         {extraHead}
         {networkOverlay}
@@ -1252,8 +1256,7 @@ render() {
             console.log("TARGET",targetAddress)
             return (
               <div>
-                <div className="main-card card w-100" style={{zIndex:1}}>
-
+                <MainCardWrapper>
                   <NavCard title={(
                     <div>
                       {i18n.t('history_chat')}
@@ -1276,7 +1279,7 @@ render() {
                     goBack={this.goBack.bind(this)}
                     dollarDisplay={dollarDisplay}
                   />
-                </div>
+                </MainCardWrapper>
                 <Bottom
                   action={()=>{
                     this.changeView('main')
@@ -1397,25 +1400,23 @@ render() {
               </div>
             )
             case 'send_by_scan':
-            return (
-              <SendByScan
-                parseAndCleanPath={this.parseAndCleanPath.bind(this)}
-                returnToState={this.returnToState.bind(this)}
-                returnState={this.state.returnState}
-                mainStyle={mainStyle}
-                goBack={this.goBack.bind(this)}
-                changeView={this.changeView}
-                onError={(error) =>{
-                  this.changeAlert("danger",error)
-                }}
-              />
-            );
+              return (
+                <SendByScan
+                  parseAndCleanPath={this.parseAndCleanPath.bind(this)}
+                  returnToState={this.returnToState.bind(this)}
+                  returnState={this.state.returnState}
+                  mainStyle={mainStyle}
+                  goBack={this.goBack.bind(this)}
+                  changeView={this.changeView}
+                  onError={(error) =>{
+                    this.changeAlert("danger",error)
+                  }}
+                />
+              );
             case 'withdraw_from_private':
-
-
               return (
                 <div>
-                  <div className="send-to-address card w-100" style={{zIndex:1}}>
+                  <MainCardWrapper>
                     <NavCard title={i18n.t('withdraw')} goBack={this.goBack.bind(this)}/>
                     {defaultBalanceDisplay}
                     <WithdrawFromPrivate
@@ -1433,7 +1434,7 @@ render() {
                       changeAlert={this.changeAlert}
                       dollarDisplay={dollarDisplay}
                     />
-                  </div>
+                  </MainCardWrapper>
                   <Bottom
                     action={()=>{
                       this.changeView('main')
@@ -1444,7 +1445,7 @@ render() {
             case 'send_badge':
             return (
               <div>
-                <div className="send-to-address card w-100" style={{zIndex:1}}>
+                <MainCardWrapper>
                   <NavCard title={this.state.badges[this.state.selectedBadge].name} titleLink={this.state.badges[this.state.selectedBadge].external_url} goBack={this.goBack.bind(this)}/>
                   <SendBadge
                     changeView={this.changeView}
@@ -1465,7 +1466,7 @@ render() {
                     badge={this.state.badges[this.state.selectedBadge]}
                     clearBadges={this.clearBadges.bind(this)}
                   />
-                </div>
+                </MainCardWrapper>
                 <Bottom
                   text={i18n.t('done')}
                   action={this.goBack.bind(this)}
@@ -1475,7 +1476,7 @@ render() {
             case 'send_to_address':
             return (
               <div>
-                <div className="send-to-address card w-100" style={{zIndex:1}}>
+                <MainCardWrapper>
                   <NavCard title={i18n.t('send_to_address_title')} goBack={this.goBack.bind(this)}/>
                   {defaultBalanceDisplay}
                   <SendToAddress
@@ -1495,7 +1496,7 @@ render() {
                     changeAlert={this.changeAlert}
                     dollarDisplay={dollarDisplay}
                   />
-                </div>
+                </MainCardWrapper>
                 <Bottom
                   text={i18n.t('cancel')}
                   action={this.goBack.bind(this)}
@@ -1505,8 +1506,7 @@ render() {
             case 'receipt':
             return (
               <div>
-                <div className="main-card card w-100" style={{zIndex:1}}>
-
+                <MainCardWrapper>
                   <NavCard title={i18n.t('receipt_title')} goBack={this.goBack.bind(this)}/>
                   <Receipt
                     receipt={this.state.receipt}
@@ -1528,7 +1528,7 @@ render() {
                     fullRecentTxs={this.state.fullRecentTxs}
                     recentTxs={this.state.recentTxs}
                   />
-                </div>
+                </MainCardWrapper>
                 <Bottom
                   action={this.goBack.bind(this)}
                 />
@@ -1568,8 +1568,7 @@ render() {
             case 'request_funds':
             return (
               <div>
-                <div className="main-card card w-100" style={{zIndex:1}}>
-
+                <MainCardWrapper>
                   <NavCard title={i18n.t('request_funds_title')} goBack={this.goBack.bind(this)}/>
                   {defaultBalanceDisplay}
                   <RequestFunds
@@ -1588,7 +1587,7 @@ render() {
                     fullRecentTxs={this.state.fullRecentTxs}
                     recentTxs={this.state.recentTxs}
                   />
-                </div>
+                </MainCardWrapper>
                 <Bottom
                   action={this.goBack.bind(this)}
                 />
@@ -1603,8 +1602,7 @@ render() {
 
               return (
                 <div>
-                  <div className="main-card card w-100" style={{zIndex:1}}>
-
+                  <MainCardWrapper>
                     <NavCard title={url} goBack={this.goBack.bind(this)} />
                     <Share
                       title={url}
@@ -1617,7 +1615,7 @@ render() {
                       changeAlert={this.changeAlert}
                       goBack={this.goBack.bind(this)}
                     />
-                  </div>
+                  </MainCardWrapper>
                   <Bottom
                     action={this.goBack.bind(this)}
                   />
@@ -1626,8 +1624,7 @@ render() {
             case 'share-link':
               return (
                 <div>
-                  <div className="main-card card w-100" style={{zIndex:1}}>
-
+                  <MainCardWrapper>
                     <NavCard title={'Share Link'} goBack={this.goBack.bind(this)} />
                       <ShareLink
                         sendKey={this.state.sendKey}
@@ -1637,7 +1634,7 @@ render() {
                         changeAlert={this.changeAlert}
                         goBack={this.goBack.bind(this)}
                       />
-                  </div>
+                  </MainCardWrapper>
                   <Bottom
                     action={this.goBack.bind(this)}
                   />
@@ -1646,8 +1643,7 @@ render() {
             case 'send_with_link':
             return (
               <div>
-                <div className="main-card card w-100" style={{zIndex:1}}>
-
+                <MainCardWrapper>
                   <NavCard title={'Send with Link'} goBack={this.goBack.bind(this)} />
                   {defaultBalanceDisplay}
                   <SendWithLink balance={balance}
@@ -1670,7 +1666,7 @@ render() {
                     goBack={this.goBack.bind(this)}
                     dollarDisplay={dollarDisplay}
                   />
-                </div>
+                </MainCardWrapper>
                 <Bottom
                   text={i18n.t('cancel')}
                   action={this.goBack.bind(this)}
@@ -1680,8 +1676,7 @@ render() {
             case 'burn-wallet':
             return (
               <div>
-                <div className="main-card card w-100" style={{zIndex:1}}>
-
+                <MainCardWrapper>
                   <NavCard title={"Burn Private Key"} goBack={this.goBack.bind(this)}/>
                   {defaultBalanceDisplay}
                   <BurnWallet
@@ -1704,7 +1699,7 @@ render() {
                     }
                   }}
                   />
-                </div>
+                </MainCardWrapper>
                 <Bottom
                   text={i18n.t('cancel')}
                   action={this.goBack.bind(this)}
@@ -1714,8 +1709,7 @@ render() {
             case 'cash_out':
             return (
               <div>
-                <div className="main-card card w-100" style={{zIndex:1}}>
-
+                <MainCardWrapper>
                   <NavCard title={"Cash Out"} goBack={this.goBack.bind(this)}/>
                   {defaultBalanceDisplay}
                   <CashOut
@@ -1726,7 +1720,7 @@ render() {
                     goBack={this.goBack.bind(this)}
                     dollarDisplay={dollarDisplay}
                   />
-                </div>
+                </MainCardWrapper>
                 <Bottom
                   action={this.goBack.bind(this)}
                 />
@@ -1781,8 +1775,7 @@ render() {
             case 'vendors':
             return (
               <div>
-                <div className="main-card card w-100" style={{zIndex:1}}>
-
+                <MainCardWrapper>
                   <NavCard title={i18n.t('vendors')} goBack={this.goBack.bind(this)}/>
                   <Vendors
                     ERC20VENDOR={ERC20VENDOR}
@@ -1800,7 +1793,7 @@ render() {
                     goBack={this.goBack.bind(this)}
                     dollarDisplay={dollarDisplay}
                   />
-                </div>
+                </MainCardWrapper>
                 <Bottom
                   action={this.goBack.bind(this)}
                 />
@@ -1954,6 +1947,16 @@ render() {
         {eventParser}
       </div>
     </div>
+    <Block
+      className="footer-disclaimer"
+      padding="xxl m l"
+      align="center"
+    >
+      <Text
+        text="Users may lose all of their money."
+        color="white-lighter"
+      />
+    </Block>
     </I18nextProvider>
   )
 }

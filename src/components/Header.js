@@ -1,6 +1,11 @@
 import React from 'react';
 import { Scaler, Blockie } from "dapparatus";
 import burnerloader from '../burnerloader.gif';
+import FlexBox from './layout/FlexBox/FlexBox';
+import Block from './layout/Block/Block';
+import Text from './general/Text/Text';
+import Clickable from './utils/Clickable/Clickable';
+
 export  default ({openScanner, network, total, dollarDisplay, ens, title, titleImage, mainStyle, balance, address, changeView, view}) => {
 
 
@@ -20,7 +25,7 @@ export  default ({openScanner, network, total, dollarDisplay, ens, title, titleI
   let blockieDisplay
   if(typeof total == "undefined" || Number.isNaN(total)){
     moneyDisplay = (
-      <div style={{opacity:0.1,fontSize:28,paddingTop:15}}>
+      <div>
         connecting...
       </div>
     )
@@ -64,40 +69,38 @@ export  default ({openScanner, network, total, dollarDisplay, ens, title, titleI
     delete scanButtonStyle.bottom
   }
 
-  let opacity = 0.5
-
-
-
-  let topLeft
-
-  if(view=="main" || view=="exchange"){
-    opacity = 1.0
-    topLeft = (
-      <div style={{zIndex:-2,position:"absolute",left:16,top:4,zIndex:1,cursor:"pointer"}}  >
-        <a href={"https://blockscout.com/poa/dai/address/"+address+"/transactions"} target="_blank" style={{color:"#FFFFFF"}}>
-          {blockieDisplay} <div style={{position:"absolute",left:60,top:15,fontSize:14}}>{name}</div>
-        </a>
-      </div>
-    )
-  }else{
-    topLeft = (
-      <div style={{zIndex:-2,position:"absolute",left:16,top:4,zIndex:1,cursor:"pointer"}} onClick={() => changeView('main')} >
-          {blockieDisplay} <div style={{position:"absolute",left:60,top:15,fontSize:14}}>{name}</div>
-      </div>
-    )
-  }
-
-  let topRight = (
-    <div style={{zIndex:-2,position:"absolute",right:28,top:-4,zIndex:1,fontSize:46,opacity:0.9}}  >
-      {moneyDisplay}
-    </div>
-  )
-
+  const goToMainPage = view !== 'main' && view !== 'exchange';
 
   return (
-    <div className="header" style={{opacity}}>
-      {topLeft}
-      {topRight}
-    </div>
+    <Block
+      styleName="header"
+      padding="l"
+    >
+      <FlexBox
+        align="space-between"
+        valign="center"
+      >
+        <Clickable
+          href={goToMainPage
+            ? '/'
+            : `https://blockscout.com/poa/dai/address/${address}/transactions`
+          }
+          onClick={goToMainPage
+            ? () => changeView('main')
+            : undefined
+          }
+        >
+          <FlexBox valign="center">
+            {blockieDisplay}
+            <Block left="m">
+              <Text
+                text={name}
+              />
+            </Block>
+          </FlexBox>
+        </Clickable>
+        {moneyDisplay}
+      </FlexBox>
+    </Block>
   )
 };
