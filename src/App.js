@@ -1374,8 +1374,7 @@ render() {
             case 'advanced':
             return (
               <div>
-                <div className="main-card card w-100" style={{zIndex:1}}>
-
+                <MainCardWrapper>
                   <NavCard title={i18n.t('advance_title')} goBack={this.goBack.bind(this)}/>
                   <Advanced
                     isVendor={this.state.isVendor && this.state.isVendor.isAllowed}
@@ -1384,11 +1383,12 @@ render() {
                     balance={balance}
                     changeView={this.changeView}
                     privateKey={metaAccount.privateKey}
+                    viewingKey="testViewingKey"
                     changeAlert={this.changeAlert}
                     goBack={this.goBack.bind(this)}
                     setPossibleNewPrivateKey={this.setPossibleNewPrivateKey.bind(this)}
                   />
-                </div>
+                </MainCardWrapper>
                 <Bottom
                   action={()=>{
                     this.changeView('main')

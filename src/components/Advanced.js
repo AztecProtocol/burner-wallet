@@ -3,6 +3,11 @@ import { Scaler } from "dapparatus";
 import Ruler from "./Ruler";
 import {CopyToClipboard} from "react-copy-to-clipboard";
 import i18n from '../i18n';
+import Section from './Section/Section';
+import Row from './layout/Row/Row';
+import Block from './layout/Block/Block';
+import Button from './general/Button/Button';
+import ButtonCol from './ButtonCol';
 const QRCode = require('qrcode.react');
 
 export default class Advanced extends React.Component {
@@ -11,22 +16,38 @@ export default class Advanced extends React.Component {
     super(props);
     this.state = {
       privateKeyQr:false,
+      viewingKeyQr: false,
       seedPhraseHidden:true,
       privateKeyHidden:true
     }
   }
   render(){
-    let {isVendor, balance, address, privateKey, changeAlert, changeView, goBack, setPossibleNewPrivateKey} = this.props
+    let {isVendor, balance, address, privateKey, viewingKey, changeAlert, changeView, goBack, setPossibleNewPrivateKey} = this.props
+    const {
+      privateKeyQr,
+      viewingKeyQr,
+    } = this.state;
 
     let url = window.location.protocol+"//"+window.location.hostname
     if(window.location.port&&window.location.port!=80&&window.location.port!=443){
       url = url+":"+window.location.port
     }
     let qrSize = Math.min(document.documentElement.clientWidth,512)-90
-    let qrValue = url+"/#"+privateKey
     let privateKeyQrDisplay = ""
-    if(this.state.privateKeyQr){
+    if (privateKeyQr){
+      let qrValue = url+"/#"+privateKey
       privateKeyQrDisplay = (
+        <div className="main-card card w-100">
+          <div className="content qr row">
+            <QRCode value={qrValue} size={qrSize}/>
+          </div>
+        </div>
+      )
+    }
+    let viewingKeyQrDisplay = '';
+    if (viewingKeyQr){
+      const qrValue = `${url}/#${viewingKey}`;
+      viewingKeyQrDisplay = (
         <div className="main-card card w-100">
           <div className="content qr row">
             <QRCode value={qrValue} size={qrSize}/>
@@ -138,88 +159,132 @@ export default class Advanced extends React.Component {
     )
 
     return (
-      <div style={{marginTop:20}}>
-
       <div>
-        <div style={{width:"100%",textAlign:"center"}}><h5>Learn More</h5></div>
-        <div className="content ops row" style={{marginBottom:10}}>
-          <div className="col-6 p-1">
-            <a href="https://github.com/austintgriffith/burner-wallet" style={{color:"#FFFFFF"}} target="_blank">
-              <button className="btn btn-large w-100" style={this.props.buttonStyle.secondary}>
-                <Scaler config={{startZoomAt:400,origin:"50% 50%"}}>
-                  <i className="fas fa-code"/> {i18n.t('code')}
-                </Scaler>
-              </button>
-            </a>
-          </div>
-          <div className="col-6 p-1">
-            <a href="https://medium.com/gitcoin/ethereum-in-emerging-economies-b235f8dac2f2" style={{color:"#FFFFFF"}} target="_blank">
-              <button className="btn btn-large w-100" style={this.props.buttonStyle.secondary}>
-                <Scaler config={{startZoomAt:400,origin:"50% 50%"}}>
-                  <i className="fas fa-info"/> {i18n.t('about')}
-                </Scaler>
-              </button>
-            </a>
-          </div>
-        </div>
-      </div>
+        <Section
+          title="Learn More"
+        >
+          <Row>
+            <ButtonCol>
+              <Button
+                icon={<i className="fas fa-code"/>}
+                text={i18n.t('code')}
+                href="https://github.com/austintgriffith/burner-wallet"
+                outlined
+                expand
+              />
+            </ButtonCol>
+            <ButtonCol>
+              <Button
+                icon={<i className="fas fa-info"/>}
+                text={i18n.t('about')}
+                href="https://medium.com/gitcoin/ethereum-in-emerging-economies-b235f8dac2f2"
+                outlined
+                expand
+              />
+            </ButtonCol>
+          </Row>
+        </Section>
 
-      <hr style={{paddingTop:20}}/>
-
-
-
-        {privateKey && !isVendor &&
-        <div>
-                    <div style={{width:"100%",textAlign:"center"}}><h5>Private Key</h5></div>
-          <div className="content ops row" style={{marginBottom:10}}>
-
-            <div className="col-6 p-1">
-            <button className="btn btn-large w-100" style={this.props.buttonStyle.secondary} onClick={()=>{
-              this.setState({privateKeyQr:!this.state.privateKeyQr})
-            }}>
-              <Scaler config={{startZoomAt:400,origin:"50% 50%"}}>
-                <i className="fas fa-key"/> {i18n.t('show')}
-              </Scaler>
-            </button>
-            </div>
-
-            <CopyToClipboard text={privateKey}>
-              <div className="col-6 p-1"
-                   onClick={() => changeAlert({type: 'success', message: 'Private Key copied to clipboard'})}>
-                <button className="btn btn-large w-100" style={this.props.buttonStyle.secondary}>
-                  <Scaler config={{startZoomAt:400,origin:"50% 50%"}}>
-                    <i className="fas fa-key"/> {i18n.t('copy')}
-                  </Scaler>
-                </button>
+        {privateKey && (
+          <Section
+            title="Private Key"
+          >
+            {!isVendor && (
+              <div>
+                <Row>
+                  <ButtonCol>
+                    <Button
+                      icon={<i className="fas fa-key"/>}
+                      text={i18n.t(privateKeyQr ? 'hide_pk' : 'show')}
+                      onClick={() => this.setState({
+                        privateKeyQr: !privateKeyQr,
+                      })}
+                      outlined
+                      expand
+                    />
+                  </ButtonCol>
+                  <ButtonCol>
+                    <CopyToClipboard text={privateKey}>
+                      <Button
+                        icon={<i className="fas fa-key"/>}
+                        text={i18n.t('copy')}
+                        onClick={() => changeAlert({type: 'success', message: 'Private Key copied to clipboard'})}
+                        outlined
+                        expand
+                      />
+                    </CopyToClipboard>
+                  </ButtonCol>
+                </Row>
+                <div className="content ops row">
+                  {privateKeyQrDisplay}
+                </div>
               </div>
-            </CopyToClipboard>
+            )}
+            <Row>
+              <ButtonCol column={12}>
+                <Button
+                  icon={<i className="fas fa-fire"/>}
+                  text={i18n.t('burn')}
+                  onClick={() => {
+                    console.log("BALANCE",balance)
+                    changeView('burn-wallet');
+                  }}
+                  expand
+                />
+              </ButtonCol>
+            </Row>
+          </Section>
+        )}
 
-          </div>
-          <div className="content ops row">
-            {privateKeyQrDisplay}
-          </div>
+        {viewingKey && (
+          <Section
+            title="Viewing Key"
+          >
+            {!isVendor && (
+              <div>
+                <Row>
+                  <ButtonCol>
+                    <Button
+                      icon={<i className="fas fa-key"/>}
+                      text={i18n.t(privateKeyQr ? 'hide_vk' : 'show_vk')}
+                      onClick={() => this.setState({
+                        viewingKeyQr: !privateKeyQr,
+                      })}
+                      outlined
+                      expand
+                    />
+                  </ButtonCol>
+                  <ButtonCol>
+                    <CopyToClipboard text={viewingKey}>
+                      <Button
+                        icon={<i className="fas fa-key"/>}
+                        text={i18n.t('copy_vk')}
+                        onClick={() => changeAlert({type: 'success', message: 'Viewing Key copied to clipboard'})}
+                        outlined
+                        expand
+                      />
+                    </CopyToClipboard>
+                  </ButtonCol>
+                </Row>
+                <div className="content ops row">
+                  {viewingKeyQrDisplay}
+                </div>
+              </div>
+            )}
+            <Row>
+              <ButtonCol column={12}>
+                <Button
+                  icon={<i className="fas fa-fire"/>}
+                  text={i18n.t('burn_vk')}
+                  onClick={()=> changeView('burn-wallet')}
+                  expand
+                />
+              </ButtonCol>
+            </Row>
+          </Section>
+        )}
 
-        </div>
-        }
-
-        {privateKey &&
-        <div>
-          <div className="content ops row" >
-            <div className="col-12 p-1">
-              <button className="btn btn-large w-100" style={this.props.buttonStyle.primary}
-                      onClick={()=>{
-                        console.log("BALANCE",balance)
-                        changeView('burn-wallet')
-                      }}>
-                <Scaler config={{startZoomAt:400,origin:"50% 50%"}}>
-                  <i className="fas fa-fire"/> {i18n.t('burn')}
-                </Scaler>
-              </button>
-            </div>
-          </div>
-          <hr style={{paddingTop:20}}/>
-        </div>}
-
+        <hr style={{paddingTop:20}}/>
 
         <div style={{width:"100%",textAlign:"center"}}><h5>Create Account</h5></div>
 
