@@ -1,0 +1,7 @@
+@import '../config/colors';
+
+.section {
+  & + .section {
+    border-top: 1px solid $default-border-color;
+  }
+}
