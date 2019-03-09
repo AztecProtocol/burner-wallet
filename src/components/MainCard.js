@@ -1,7 +1,7 @@
 import React from 'react';
 import { Scaler } from "dapparatus";
 import i18next from 'i18next';
-import ButtonWrapper from './ButtonWrapper';
+import ButtonCol from './ButtonCol';
 import Button from './general/Button/Button';
 
 export default ({ERC20TOKEN,address, balance, changeAlert, changeView, dollarDisplay, subBalanceDisplay}) => {
@@ -9,7 +9,7 @@ export default ({ERC20TOKEN,address, balance, changeAlert, changeView, dollarDis
 
   if(ERC20TOKEN){
     sendButtons = [
-      <ButtonWrapper
+      <ButtonCol
         key="receive"
       >
         <Button
@@ -20,8 +20,8 @@ export default ({ERC20TOKEN,address, balance, changeAlert, changeView, dollarDis
             <i className="fas fa-qrcode"  /> {i18next.t('main_card.receive')}
           </Scaler>
         </Button>
-      </ButtonWrapper>,
-      <ButtonWrapper
+      </ButtonCol>,
+      <ButtonCol
         key="send"
       >
         <Button
@@ -32,8 +32,8 @@ export default ({ERC20TOKEN,address, balance, changeAlert, changeView, dollarDis
             <i className="fas fa-paper-plane"/> {i18next.t('main_card.send')}
           </Scaler>
         </Button>
-      </ButtonWrapper>,
-      <ButtonWrapper
+      </ButtonCol>,
+      <ButtonCol
         key="share"
       >
         <Button
@@ -45,11 +45,11 @@ export default ({ERC20TOKEN,address, balance, changeAlert, changeView, dollarDis
             <i className="fas fa-share"/> {i18next.t('main_card.share')}
           </Scaler>
         </Button>
-      </ButtonWrapper>,
+      </ButtonCol>,
     ];
   } else {
     sendButtons = [
-      <ButtonWrapper
+      <ButtonCol
         key="receive"
       >
         <Button
@@ -60,8 +60,8 @@ export default ({ERC20TOKEN,address, balance, changeAlert, changeView, dollarDis
             <i className="fas fa-qrcode"  /> {i18next.t('main_card.receive')}
           </Scaler>
         </Button>
-      </ButtonWrapper>,
-      <ButtonWrapper
+      </ButtonCol>,
+      <ButtonCol
         key="send"
       >
         <Button
@@ -73,8 +73,8 @@ export default ({ERC20TOKEN,address, balance, changeAlert, changeView, dollarDis
             <i className="fas fa-paper-plane"/> {i18next.t('main_card.send')}
           </Scaler>
         </Button>
-      </ButtonWrapper>,
-      <ButtonWrapper
+      </ButtonCol>,
+      <ButtonCol
         key="share"
       >
         <Button
@@ -86,7 +86,7 @@ export default ({ERC20TOKEN,address, balance, changeAlert, changeView, dollarDis
             <i className="fas fa-share"/> {i18next.t('main_card.share')}
           </Scaler>
         </Button>
-      </ButtonWrapper>,
+      </ButtonCol>,
     ];
   }
 

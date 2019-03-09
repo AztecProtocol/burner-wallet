@@ -24,7 +24,6 @@ import CashOut from "./components/CashOut";
 import MainCard from './components/MainCard';
 import History from './components/History';
 import Advanced from './components/Advanced';
-import BottomLinks from './components/BottomLinks';
 import MoreButtons from './components/MoreButtons';
 import Admin from './components/Admin';
 import Vendor from './components/Vendor';
@@ -37,7 +36,7 @@ import BurnWallet from './components/BurnWallet'
 import Exchange from './components/Exchange'
 import Bottom from './components/Bottom';
 import customRPCHint from './customRPCHint.png';
-import namehash from 'eth-ens-namehash'
+import namehash from 'eth-ens-namehash';
 
 //https://github.com/lesnitsky/react-native-webview-messaging/blob/v1/examples/react-native/web/index.js
 import RNMessageChannel from 'react-native-webview-messaging';
@@ -1538,8 +1537,7 @@ render() {
             case 'receive':
             return (
               <div>
-                <div className="main-card card w-100" style={{zIndex:1}}>
-
+                <MainCardWrapper>
                   <NavCard title={i18n.t('receive_title')} goBack={this.goBack.bind(this)}/>
                   {defaultBalanceDisplay}
                   <Receive
@@ -1561,7 +1559,7 @@ render() {
                     fullRecentTxs={this.state.fullRecentTxs}
                     recentTxs={this.state.recentTxs}
                   />
-                </div>
+                </MainCardWrapper>
                 <Bottom
                   action={this.goBack.bind(this)}
                 />

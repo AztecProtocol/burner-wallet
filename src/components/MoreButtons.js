@@ -1,6 +1,6 @@
 import React from 'react';
 import { Scaler } from "dapparatus";
-import ButtonWrapper from './ButtonWrapper';
+import ButtonCol from './ButtonCol';
 import Button from './general/Button/Button';
 import i18n from '../i18n';
 
@@ -35,8 +35,8 @@ export default ({isVendor, buttonStyle,ERC20TOKEN,address, balance, changeAlert,
 
 
   return (
-    <ButtonWrapper>
+    <ButtonCol>
       {exchangeButton}
-    </ButtonWrapper>
+    </ButtonCol>
   )
 }

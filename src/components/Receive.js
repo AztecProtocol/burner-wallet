@@ -6,6 +6,7 @@ import Blockies from 'react-blockies';
 import RecentTransactions from './RecentTransactions';
 import { scroller } from 'react-scroll'
 import i18n from '../i18n';
+import Block from './layout/Block/Block';
 const QRCode = require('qrcode.react');
 
 export default class Receive extends React.Component {
@@ -25,19 +26,23 @@ export default class Receive extends React.Component {
     return (
       <div>
         <div className="send-to-address w-100">
-          <CopyToClipboard text={address} onCopy={() => {
-            changeAlert({type: 'success', message: i18n.t('receive.address_copied')})
-          }}>
-            <div className="content qr row" style={{cursor:"pointer"}}>
-              <QRCode value={qrValue} size={qrSize}/>
+          <Block
+            padding="m 0"
+          >
+            <QRCode value={qrValue} size={qrSize}/>
+          </Block>
+          <Block padding="m 0">
+            <CopyToClipboard text={address} onCopy={() => {
+              changeAlert({type: 'success', message: i18n.t('receive.address_copied')})
+            }}>
               <div className="input-group">
                 <input type="text" className="form-control" style={{color:"#999999"}} value={address} disabled/>
                 <div className="input-group-append">
                   <span className="input-group-text"><i style={{color:"#999999"}}  className="fas fa-copy"/></span>
                 </div>
               </div>
-            </div>
-          </CopyToClipboard>
+            </CopyToClipboard>
+          </Block>
           <RecentTransactions
             view={view}
             max={5}
