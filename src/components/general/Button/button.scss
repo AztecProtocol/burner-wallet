@@ -101,8 +101,10 @@ $button-border-width: 1px;
     box-shadow: none;
     white-space: nowrap;
 
+    &:hover,
     &:focus {
-        outline: none;
+      outline: none;
+      text-decoration: none;
     }
 }
 
@@ -129,9 +131,8 @@ $button-border-width: 1px;
             border: $button-border-width solid $button-color;
 
             &:not(.disabled-hover):hover {
-                @include background($color-name, 1);
-                color: $button-content-color;
-                border-color: transparent;
+              background: transparent;
+              color: $button-color;
             }
         }
 
