@@ -282,53 +282,6 @@ export default class Advanced extends React.Component {
             </Row>
           </Section>
         )}
-
-        <hr style={{paddingTop:20}}/>
-
-        <div style={{width:"100%",textAlign:"center"}}><h5>Create Account</h5></div>
-
-        {inputPrivateKeyRow}
-
-        {inputSeedRow}
-
-        <hr style={{paddingTop:20}}/>
-        <div style={{width:"100%",textAlign:"center"}}><h5>Extra Tools</h5></div>
-
-        <div className="content ops row">
-          <div className="col-6 p-1">
-              <input type="text" autocorrect="off" autocapitalize="none" className="form-control" placeholder="any text to encode" value={this.state.newQr}
-                     onChange={event => this.setState({newQr:event.target.value})} />
-          </div>
-          <div className="col-6 p-1">
-            <button className="btn btn-large w-100" style={this.props.buttonStyle.secondary}
-                    onClick={()=>{
-                      this.setState({showingQr:this.state.newQr})
-                    }}>
-              <Scaler config={{startZoomAt:400,origin:"50% 50%"}}>
-                <i className="fas fa-qrcode"/> {i18n.t('advanced.to_qr')}
-              </Scaler>
-            </button>
-          </div>
-        </div>
-        {showingQr}
-
-        {isVendor &&
-        <div>
-          <div className="content ops row" style={{marginBottom:10}}>
-
-            <div className="col-12 p-1">
-            <button className="btn btn-large w-100" style={this.props.buttonStyle.secondary} onClick={()=>{
-              this.props.changeView("exchange")
-            }}>
-              <Scaler config={{startZoomAt:400,origin:"50% 50%"}}>
-                <i className="fas fa-key"/> {"Exchange"}
-              </Scaler>
-            </button>
-            </div>
-          </div>
-        </div>
-        }
-
       </div>
     )
   }

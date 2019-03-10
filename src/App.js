@@ -1386,7 +1386,7 @@ render() {
                     balance={balance}
                     changeView={this.changeView}
                     privateKey={metaAccount.privateKey}
-                    viewingKey="testViewingKey"
+                    viewingKey="testViewingKey" // TODO
                     changeAlert={this.changeAlert}
                     goBack={this.goBack.bind(this)}
                     setPossibleNewPrivateKey={this.setPossibleNewPrivateKey.bind(this)}

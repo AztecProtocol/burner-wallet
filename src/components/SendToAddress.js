@@ -5,6 +5,7 @@ import cookie from 'react-cookies'
 import {CopyToClipboard} from "react-copy-to-clipboard";
 import Blockies from 'react-blockies';
 import { scroller } from 'react-scroll'
+import Button from './general/Button/Button';
 import i18n from '../i18n';
 
 
@@ -293,10 +294,12 @@ export default class SendToAddress extends React.Component {
                      onChange={event => this.updateState('message', event.target.value)} />
             </div>
           </div>
-          <button name="theVeryBottom" className={`btn btn-lg w-100 ${canSend ? '' : 'disabled'}`} style={this.props.buttonStyle.primary}
-                  onClick={this.send}>
-            Send
-          </button>
+          <Button
+            text="Send"
+            disabled={!canSend}
+            onSubmit={this.send}
+            expand
+          />
         </div>
       </div>
     )
